@@ -28,24 +28,34 @@ func (u *UserLogin) Login(username string, password string) *string {
 	return &user.Username
 }
 
-func (u *UserLogin) Register(username string, password string, email string) error {
-	_, err := u.db.Exec(`
-		INSERT INTO users (username, password, email) VALUES (?, ?, ?)`, username, password, email)
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (u *UserLogin) FetchuserEmail(email string) (*string, error) {
+func (u *UserLogin) Register(username string, password string, email string) (bool, error) {
 	var user model.Users
 
 	err := u.db.QueryRow(`
-		SELECT * FROM users WHERE email = ?`, email).Scan(&user.Email)
+		INSERT INTO users(username, password, email) VALUES
+			(?, ?, ?)`, username, password, email).Scan(&user.Username, &user.Password, &user.Email)
 	if err != nil {
-		return nil, err
+		return false, err
 	}
 
-	return &user.Email, nil
+	return true, nil
+	// err := u.db.Exec(`
+	// 	INSERT INTO users (username, password, email) VALUES (?, ?, ?)`, username, password, email)
+	// if err != nil {
+	// 	return err
+	// }
+
+	// return nil
 }
+
+// func (u *UserLogin) FetchuserEmail(email string) (*string, error) {
+// 	var user model.Users
+
+// 	err := u.db.QueryRow(`
+// 		SELECT * FROM users WHERE email = ?`, email).Scan(&user.Email)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+
+// 	return &user.Email, nil
+// }

@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"time"
 
+	"final-project-engineering-56/Backend/model"
+
 	"github.com/golang-jwt/jwt/v4"
 )
 
@@ -71,7 +73,7 @@ func (api *API) login(w http.ResponseWriter, req *http.Request) {
 
 func (api *API) register(w http.ResponseWriter, r *http.Request) {
 	api.AllowOrigin(w, r)
-	var user User
+	var user model.Users
 	err := json.NewDecoder(r.Body).Decode(&user)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
