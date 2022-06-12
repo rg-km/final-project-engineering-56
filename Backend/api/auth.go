@@ -31,7 +31,7 @@ type claims struct {
 var key = []byte("secret")
 
 func (api *API) login(w http.ResponseWriter, req *http.Request) {
-
+	api.AllowOrigin(w, req)
 	var user User
 	err := json.NewDecoder(req.Body).Decode(&user)
 	if err != nil {
@@ -39,7 +39,6 @@ func (api *API) login(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
 	encoder := json.NewEncoder(w)
 	if err != nil {
 		w.WriteHeader(http.StatusUnauthorized)
@@ -70,7 +69,8 @@ func (api *API) login(w http.ResponseWriter, req *http.Request) {
 	json.NewEncoder(w).Encode(LoginSuccess{Username: user.Username, Token: tokenString})
 }
 
-func (api *API) Register(w http.ResponseWriter, r *http.Request) {
+func (api *API) register(w http.ResponseWriter, r *http.Request) {
+	api.AllowOrigin(w, r)
 	var user User
 	err := json.NewDecoder(r.Body).Decode(&user)
 	if err != nil {
@@ -78,7 +78,6 @@ func (api *API) Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
 	encoder := json.NewEncoder(w)
 	if err != nil {
 		w.WriteHeader(http.StatusUnauthorized)
@@ -87,4 +86,32 @@ func (api *API) Register(w http.ResponseWriter, r *http.Request) {
 	}
 
 	json.NewEncoder(w).Encode(LoginSuccess{Username: user.Username, Token: ""})
+}
+
+func (api *API) logout(w http.ResponseWriter, r *http.Request) {
+
+	token, err := r.Cookie("token")
+	if err != nil {
+		if err == http.ErrNoCookie {
+			// return unauthorized ketika token kosong
+			w.WriteHeader(http.StatusUnauthorized)
+			return
+		}
+		// return bad request ketika field token tidak ada
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	if token.Value == "" {
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
+	c := http.Cookie{
+		Name:   "token",
+		MaxAge: -1,
+	}
+	http.SetCookie(w, &c)
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("Logout success"))
 }

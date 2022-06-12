@@ -17,7 +17,9 @@ func NewApi(userRepo controller.UserLogin) API {
 		userRepo, mux,
 	}
 
-	mux.Handle("/api/user/login", (http.HandlerFunc(api.login))) // POST
+	mux.Handle("/api/user/login", api.POST(http.HandlerFunc(api.login)))   // POST
+	mux.Handle("/api/user/logout", api.POST(http.HandlerFunc(api.logout))) // POST
+
 	return api
 }
 
