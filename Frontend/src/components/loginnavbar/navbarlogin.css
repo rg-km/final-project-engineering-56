@@ -1,0 +1,19 @@
+.text-masuk{
+    color: rgb(63, 160, 239);
+}
+.text-white{
+    color: #fff;
+}
+.text-email{
+    margin-top: 20px;
+}
+.email{
+    color:#fff
+} 
+.text-password{
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+.password{
+    color:#fff
+}
