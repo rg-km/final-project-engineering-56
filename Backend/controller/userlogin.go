@@ -28,24 +28,37 @@ func (u *UserLogin) Login(username string, password string) *string {
 	return &user.Username
 }
 
-func (u *UserLogin) Register(username string, password string, email string) (bool, error) {
-	var user model.Users
+func (u *UserLogin) Register(username string, password string, email string) error {
 
-	err := u.db.QueryRow(`
-		INSERT INTO users(username, password, email) VALUES
-			(?, ?, ?)`, username, password, email).Scan(&user.Username, &user.Password, &user.Email)
+	p := "INSERT INTO users (username, password, email) VALUES (?, ?, ?)"
+
+	_, err := u.db.Exec(p, username, password, email)
 	if err != nil {
-		return false, err
+		return err
 	}
 
-	return true, nil
-	// err := u.db.Exec(`
-	// 	INSERT INTO users (username, password, email) VALUES (?, ?, ?)`, username, password, email)
-	// if err != nil {
-	// 	return err
-	// }
+	return nil
+}
 
-	// return nil
+func (u *UserLogin) GetALLUser() ([]model.Users, error) {
+	rows, err := u.db.Query(`SELECT * FROM users`)
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	var users []model.Users
+	for rows.Next() {
+		var user model.Users
+		err := rows.Scan(&user.ID, &user.Username, &user.Password, &user.Email)
+		if err != nil {
+			return nil, err
+		}
+		users = append(users, user)
+	}
+
+	return users, nil
 }
 
 // func (u *UserLogin) FetchuserEmail(email string) (*string, error) {
