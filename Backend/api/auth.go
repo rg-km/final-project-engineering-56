@@ -2,17 +2,18 @@ package api
 
 import (
 	"encoding/json"
+	"final-project-engineering-56/Backend/model"
 	"net/http"
 	"time"
-
-	"final-project-engineering-56/Backend/model"
 
 	"github.com/golang-jwt/jwt/v4"
 )
 
 type User struct {
+	ID       int    `json:"id"`
 	Username string `json:"username"`
 	Password string `json:"password"`
+	Email    string `json:"email"`
 }
 
 type LoginSuccess struct {
@@ -80,6 +81,12 @@ func (api *API) register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	Regis := api.userRepo.Register(user.Username, user.Password, user.Email)
+	if Regis == nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
 	encoder := json.NewEncoder(w)
 	if err != nil {
 		w.WriteHeader(http.StatusUnauthorized)
@@ -87,11 +94,11 @@ func (api *API) register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	json.NewEncoder(w).Encode(LoginSuccess{Username: user.Username, Token: ""})
+	json.NewEncoder(w).Encode(&Regis)
 }
 
 func (api *API) logout(w http.ResponseWriter, r *http.Request) {
-
+	api.AllowOrigin(w, r)
 	token, err := r.Cookie("token")
 	if err != nil {
 		if err == http.ErrNoCookie {
