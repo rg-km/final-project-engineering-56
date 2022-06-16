@@ -10,13 +10,13 @@ function App() {
           <img src={profile} alt="" />
         </div>
       
-      <form>
+      <form >
         <div>
           <div className="email">
             <label html='email' className='label'>
             Email :  
             </label>
-            <input id='email' className="text-email" type="email" placeholder="Enter your email" />
+            <input id='email' className="text-email" type="text" placeholder="Enter your email" />
           </div> 
         
           <div className="password">

@@ -17,3 +17,8 @@
 .password{
     color:#fff
 }
+.form{
+    display: flex;
+    flex-direction: column;
+    width: 280px;
+}
