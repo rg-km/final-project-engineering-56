@@ -61,14 +61,32 @@ func (u *UserLogin) GetALLUser() ([]model.Users, error) {
 	return users, nil
 }
 
-// func (u *UserLogin) FetchuserEmail(email string) (*string, error) {
-// 	var user model.Users
+func (u *UserLogin) Update(id int, username string, password string, email string) error {
+	_, err := u.db.Exec(`
+		UPDATE users SET username = ?, password = ?, email = ? WHERE id = ?`, username, password, email, id)
+	if err != nil {
+		return err
+	}
 
-// 	err := u.db.QueryRow(`
-// 		SELECT * FROM users WHERE email = ?`, email).Scan(&user.Email)
-// 	if err != nil {
-// 		return nil, err
-// 	}
+	return nil
+}
 
-// 	return &user.Email, nil
-// }
+func (u *UserLogin) Delete(id int) error {
+	_, err := u.db.Exec(`DELETE FROM users WHERE id = ?`, id)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (u *UserLogin) GetbyID(id int) (model.Users, error) {
+	var user model.Users
+
+	err := u.db.QueryRow(`SELECT * FROM users WHERE id = ?`, id).Scan(&user.ID, &user.Username, &user.Password, &user.Email)
+	if err != nil {
+		return user, err
+	}
+
+	return user, nil
+}

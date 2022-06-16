@@ -16,7 +16,8 @@ func main() {
 
 	usersRepo := controller.NewUserLogin(db)
 	booksRepo := controller.NewBuku(db)
+	adminRepo := controller.NewAdmin(db)
 
-	mainAPI := api.NewApi(*usersRepo, *booksRepo)
+	mainAPI := api.NewApi(*usersRepo, *booksRepo, *adminRepo)
 	mainAPI.Start()
 }

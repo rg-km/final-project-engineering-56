@@ -65,3 +65,41 @@ func (b *Buku) INSERTBuku(ISBN string, Judul string, Penerbit string, Pengarang 
 
 	return nil
 }
+
+func (b *Buku) UPDATEBuku(id int64, ISBN string, Judul string, Penerbit string, Pengarang string, Tahun string, Gambar string, Deskripsi string) error {
+	_, err := b.db.Exec(`UPDATE books SET ISBN = ?, Judul = ?, Penerbit = ?, Pengarang = ?, Tahun = ?, Gambar = ?, Deskripsi = ? WHERE idbuku = ?`, ISBN, Judul, Penerbit, Pengarang, Tahun, Gambar, Deskripsi, id)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (b *Buku) DELETEBuku(id int64) error {
+	_, err := b.db.Exec(`DELETE FROM books WHERE idbuku = ?`, id)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (b *Buku) GetBukuByPengarang(Pengarang string) ([]model.Books, error) {
+	var bukus []model.Books
+
+	rows, err := b.db.Query(`SELECT * FROM books WHERE Pengarang = ?`, Pengarang)
+	if err != nil {
+		return bukus, err
+	}
+
+	for rows.Next() {
+		var buku model.Books
+		err := rows.Scan(&buku.IDbuku, &buku.ISBN, &buku.Judul, &buku.Penerbit, &buku.Pengarang, &buku.Tahun, &buku.Gambar, &buku.Deskripsi)
+		if err != nil {
+			return bukus, err
+		}
+		bukus = append(bukus, buku)
+	}
+
+	return bukus, nil
+}

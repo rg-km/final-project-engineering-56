@@ -4,9 +4,11 @@ import (
 	"encoding/json"
 	"final-project-engineering-56/Backend/model"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/golang-jwt/jwt/v4"
+	"github.com/gorilla/mux"
 )
 
 type User struct {
@@ -151,4 +153,65 @@ func (api *API) GetallUser(w http.ResponseWriter, r *http.Request) {
 	}
 	encoder := json.NewEncoder(w)
 	encoder.Encode(userList)
+}
+
+func (api *API) UpdateUser(w http.ResponseWriter, r *http.Request) {
+	api.AllowOrigin(w, r)
+	var user model.Users
+	err := json.NewDecoder(r.Body).Decode(&user)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	err = api.userRepo.Update(user.ID, user.Username, user.Password, user.Email)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		encoder := json.NewEncoder(w)
+		encoder.Encode(AuthError{Error: "Failed to update user"})
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("Update user success"))
+}
+
+func (api *API) DeleteUser(w http.ResponseWriter, r *http.Request) {
+	api.AllowOrigin(w, r)
+	var user model.Users
+	err := json.NewDecoder(r.Body).Decode(&user)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	err = api.userRepo.Delete(user.ID)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		encoder := json.NewEncoder(w)
+		encoder.Encode(AuthError{Error: "Failed to delete user"})
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("Delete user success"))
+}
+
+func (api *API) GetById(w http.ResponseWriter, r *http.Request) {
+	api.AllowOrigin(w, r)
+	params := mux.Vars(r)
+	id, err := strconv.Atoi(params["id"])
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	var user model.Users
+	user, err = api.userRepo.GetbyID(id)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		encoder := json.NewEncoder(w)
+		encoder.Encode(AuthError{Error: "Failed to get user"})
+		return
+	}
+
+	encoder := json.NewEncoder(w)
+	encoder.Encode(user)
+
 }
