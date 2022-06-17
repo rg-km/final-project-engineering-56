@@ -2,24 +2,48 @@ package api
 
 import (
 	"final-project-engineering-56/Backend/controller"
+
 	"fmt"
 	"net/http"
 )
 
 type API struct {
-	userRepo controller.UserLogin
-	mux      *http.ServeMux
+	userRepo  controller.UserLogin
+	bukuRepo  controller.Buku
+	adminRepo controller.Admin
+	mux       *http.ServeMux
 }
 
-func NewApi(userRepo controller.UserLogin) API {
+func NewApi(userRepo controller.UserLogin, bukuRepo controller.Buku, adminRepo controller.Admin) API {
 	mux := http.NewServeMux()
 	api := API{
-		userRepo, mux,
+		userRepo, bukuRepo, adminRepo, mux,
 	}
+	//user
+	mux.Handle("/api/user/login", api.POST(http.HandlerFunc(api.login)))       // POST
+	mux.Handle("/api/user/logout", api.POST(http.HandlerFunc(api.logout)))     // POST
+	mux.Handle("/api/user/register", api.POST(http.HandlerFunc(api.Register))) // POST
+	mux.Handle("/api/user/update", api.POST(http.HandlerFunc(api.UpdateUser))) // POST
+	mux.Handle("/api/user/delete", api.POST(http.HandlerFunc(api.DeleteUser))) // POST
+	mux.Handle("/api/user/getall", api.GET(http.HandlerFunc(api.GetallUser)))  // GET
+	// mux.Handle("/api/user/getiduser", api.GET(http.HandlerFunc(api.GetById)))  // GET}")
 
-	mux.Handle("/api/user/login", api.POST(http.HandlerFunc(api.login)))   // POST
-	mux.Handle("/api/user/logout", api.POST(http.HandlerFunc(api.logout))) // POST
+	//admin
+	mux.Handle("/api/admin/login", api.POST(http.HandlerFunc(api.AdminLogin)))         // POST
+	mux.Handle("/api/admin/logout", api.POST(http.HandlerFunc(api.AdminLogout)))       // POST
+	mux.Handle("/api/admin/register", api.POST(http.HandlerFunc(api.AdminInputAdmin))) //POST
+	mux.Handle("/api/admin/update", api.POST(http.HandlerFunc(api.AdminUpdateAdmin)))  //POST
+	mux.Handle("/api/admin/delete", api.POST(http.HandlerFunc(api.AdminDeleteAdmin)))  //POST
+	mux.Handle("/api/admin/getall", api.GET(http.HandlerFunc(api.AdminGetAllAdmin)))   //GET
+	// mux.Handle("/api/admin/getidadmin", api.GET(http.HandlerFunc(api.AdminGetById))) //GET
 
+	//buku
+	
+	mux.Handle("/api/buku/addbuku", api.POST(http.HandlerFunc(api.InputBuku)))     // POST
+	mux.Handle("/api/buku/delete", api.POST(http.HandlerFunc(api.DeleteBukuByID))) // POST
+	mux.Handle("/api/buku/update", api.POST(http.HandlerFunc(api.UpdateBukuByID))) // POST
+	mux.Handle("/api/buku/getidbuku", api.GET(http.HandlerFunc(api.GetById)))      // GET
+	mux.Handle("/api/buku/getall", api.GET(http.HandlerFunc(api.Getallbuku)))      // GET
 	return api
 }
 
