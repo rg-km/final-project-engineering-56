@@ -22,7 +22,6 @@ func AdminMiddleware(next http.Handler) http.Handler {
 			encoder.Encode(Respon{Error: "You are not admin"})
 			return
 		}
-
 		next.ServeHTTP(w, r)
 	})
 }

@@ -2,7 +2,6 @@ package api
 
 import (
 	"final-project-engineering-56/Backend/controller"
-	"final-project-engineering-56/Backend/middleware"
 
 	"fmt"
 	"net/http"
@@ -39,9 +38,12 @@ func NewApi(userRepo controller.UserLogin, bukuRepo controller.Buku, adminRepo c
 	// mux.Handle("/api/admin/getidadmin", api.GET(http.HandlerFunc(api.AdminGetById))) //GET
 
 	//buku
-	mux.Handle("/api/buku/getall", api.GET(http.HandlerFunc(api.Getallbuku)))                              // GET
-	mux.Handle("/api/buku/addbuku", api.POST(middleware.AdminMiddleware(http.HandlerFunc(api.InputBuku)))) // POST
-
+	
+	mux.Handle("/api/buku/addbuku", api.POST(http.HandlerFunc(api.InputBuku)))     // POST
+	mux.Handle("/api/buku/delete", api.POST(http.HandlerFunc(api.DeleteBukuByID))) // POST
+	mux.Handle("/api/buku/update", api.POST(http.HandlerFunc(api.UpdateBukuByID))) // POST
+	mux.Handle("/api/buku/getidbuku", api.GET(http.HandlerFunc(api.GetById)))      // GET
+	mux.Handle("/api/buku/getall", api.GET(http.HandlerFunc(api.Getallbuku)))      // GET
 	return api
 }
 

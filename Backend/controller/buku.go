@@ -33,7 +33,7 @@ func (b *Buku) GetAllBuku() ([]model.Books, error) {
 	return bukus, nil
 }
 
-func (b *Buku) GetBukuByID(id int64) (model.Books, error) {
+func (b *Buku) GetBukuByID(id int) (model.Books, error) {
 	var buku model.Books
 
 	err := b.db.QueryRow(`SELECT * FROM books WHERE idbuku = ?`, id).Scan(&buku.IDbuku, &buku.ISBN, &buku.Judul, &buku.Penerbit, &buku.Pengarang, &buku.Tahun, &buku.Gambar, &buku.Deskripsi)
@@ -66,7 +66,7 @@ func (b *Buku) INSERTBuku(ISBN string, Judul string, Penerbit string, Pengarang 
 	return nil
 }
 
-func (b *Buku) UPDATEBuku(id int64, ISBN string, Judul string, Penerbit string, Pengarang string, Tahun string, Gambar string, Deskripsi string) error {
+func (b *Buku) UPDATEBuku(id int, ISBN string, Judul string, Penerbit string, Pengarang string, Tahun string, Gambar string, Deskripsi string) error {
 	_, err := b.db.Exec(`UPDATE books SET ISBN = ?, Judul = ?, Penerbit = ?, Pengarang = ?, Tahun = ?, Gambar = ?, Deskripsi = ? WHERE idbuku = ?`, ISBN, Judul, Penerbit, Pengarang, Tahun, Gambar, Deskripsi, id)
 	if err != nil {
 		return err
@@ -75,7 +75,7 @@ func (b *Buku) UPDATEBuku(id int64, ISBN string, Judul string, Penerbit string, 
 	return nil
 }
 
-func (b *Buku) DELETEBuku(id int64) error {
+func (b *Buku) DELETEBuku(id int) error {
 	_, err := b.db.Exec(`DELETE FROM books WHERE idbuku = ?`, id)
 	if err != nil {
 		return err
