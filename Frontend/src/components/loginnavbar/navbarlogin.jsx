@@ -1,37 +1,35 @@
-import React from 'react'; 
-import profile from "../../Profile-login.png"
-import "./navbarlogin.css"
+import React from 'react';
+import profile from "../../Profile-login.png";
+import "./navbarlogin.css";
 
-function App() {
+const App = () => {
   return (
-    <div className="main">
-      <h1 className="text-masuk"> Masuk </h1>
-        <div className="images"> 
-          <img src={profile} alt="" />
-        </div>
-      
-      <form >
-        <div>
-          <div className="email">
-            <label html='email' className='label'>
-            Email :  
-            </label>
-            <input id='email' className="text-email" type="text" placeholder="Enter your email" />
-          </div> 
-        
-          <div className="password">
-            <label html='password' className='label'>
-            Password :
-            </label>
-            <input id='password'className="text-password" type="password" placeholder="Enter your password" />
-          </div>
-        </div>
-      
-        <button>Masuk</button>
-        <p className="text-white">dont have an account? <a href="signup"> Sign Up </a> </p>
-      </form>
-    </div>   
-  );
-}
+    <div style={{marginTop: "100px"}}>
+      <div className="container">
+        <h1 className="text-masuk">Masuk</h1>
+            <div className="images"> 
+            <img src={profile} alt="" />
+            </div>
+            <div className="row justify-content-center">
+            <div className="col-md-3">
+              
+            <div className="form-group">
+            <label className="text-white">Email</label>
+            <input type="email" placeholder="Enter your email" className="form-control"/>
+            </div>
 
+            <div className="form-group">
+            <label className="text-white">Password</label>
+            <input type="password" placeholder="Enter your password" className="form-control"/>
+            </div>
+
+            <button className="btn btn-primary">Masuk</button>
+            <p className="text-white">dont have an account? <a href="/signup"> Sign Up </a> </p>
+            </div>
+        </div>  
+      </div>
+    </div>
+  )
+}
+  
 export default App;

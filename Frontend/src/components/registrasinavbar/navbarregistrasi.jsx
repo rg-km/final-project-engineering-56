@@ -1,46 +1,41 @@
+import React from 'react';
 import "./navbarregistrasi.css"
 
-function App() {
+const App = () => {
   return (
-  <div className="main">
-    <h1 className="text-daftar">Daftar</h1>
-    
-    <form>
-      <div>
-        <div className="username">
-        <label html='username' className='label'>
-        Username :
-        </label>
-        <input id='username' className="text-username" type="username" placeholder="Enter your username"/>
-        </div>
-        
-        <div className="email">
-        <label html='email' className='label'>
-        Email :
-        </label>
-        <input id='email' className="text-email" type="email" placeholder="Enter your email" />
-        </div> 
+    <div style={{marginTop: "100px"}}>
+      <div className="container">
+        <h1 className="text-daftar">Daftar</h1>
+          <div className="row justify-content-center">
+            <div className="col-md-3">
+              
+              <div className="form-group">
+              <label className="text-white">Username</label>
+              <input type="text" placeholder="Enter your username" className="form-control"/>
+              </div>
+              
+              <div className="form-group">
+              <label className="text-white">Email</label>
+              <input type="email" placeholder="Enter your email" className="form-control"/>
+              </div>
 
-        <div className="password">
-        <label html='password' className='label'>
-        Password :
-        </label>
-        <input className="text-password" type="password" placeholder="Enter your password" />
-        </div>
+              <div className="form-group">
+              <label className="text-white">Password</label>
+              <input type="password" placeholder="Enter your password" className="form-control"/>
+              </div>
 
-        <div className="confirmpassword">
-        <label html='confirmpassword' className='label'>
-        Confirm Password :
-        </label>
-        <input className="text-confirmpassword" type="confirmpassword" placeholder="Enter confirm password" />
-        </div>
+              <div className="form-group">
+              <label className="text-white">Confirm Password</label>
+              <input type="password" placeholder="Confirm your password" className="form-control"/>
+              </div>
+
+              <button className="btn btn-primary">Masuk</button>
+              <p className="text-white">have an account? <a href="/"> Login </a> </p>
+            </div>
+        </div>  
       </div>
-
-      <button>Masuk</button>
-      <p className="text-white">have an account? <a href="/"> Login </a> </p>
-      </form>
-  </div>   
-  );
+    </div>
+  )
 }
-
+  
 export default App;
