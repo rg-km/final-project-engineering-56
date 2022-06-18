@@ -2,6 +2,7 @@ package controller
 
 import (
 	"database/sql"
+	"final-project-engineering-56/Backend/middleware"
 	"final-project-engineering-56/Backend/model"
 )
 
@@ -22,14 +23,24 @@ func (a *Admin) Login(username string, password string) *string {
 		return nil
 	}
 
+	match := middleware.Verifypassword(password, admin.Password)
+	if match == false {
+		return nil
+	}
+
 	return &admin.Username
 }
 
 func (a *Admin) Register(username string, password string, role string) error {
 
-	p := "INSERT INTO admin (username, password, role) VALUES (?, ?, ?)"
+	// p := "INSERT INTO admin (username, password, role) VALUES (?, ?, ?)"
+	// _, err := a.db.Exec(p, username, password, role)
+	// if err != nil {
+	// 	return err
+	// }
 
-	_, err := a.db.Exec(p, username, password, role)
+	middleware.Hashpassword(password)
+	_, err := a.db.Exec(`INSERT INTO admin (username, password, role) VALUES (?, ?, ?)`, username, password, role)
 	if err != nil {
 		return err
 	}

@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"final-project-engineering-56/Backend/middleware"
 	"final-project-engineering-56/Backend/model"
 	"net/http"
 	"time"
@@ -108,7 +109,7 @@ func (api *API) AdminInputAdmin(w http.ResponseWriter, req *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	err = api.adminRepo.Register(admin.Username, admin.Password, admin.Role)
+	err = api.adminRepo.Register(admin.Username, middleware.Hashpassword(admin.Password), admin.Role)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		encoder := json.NewEncoder(w)

@@ -5,6 +5,7 @@ import (
 
 	_ "github.com/mattn/go-sqlite3"
 
+	"final-project-engineering-56/Backend/middleware"
 	"final-project-engineering-56/Backend/model"
 )
 
@@ -22,6 +23,11 @@ func (u *UserLogin) Login(username string, password string) *string {
 	err := u.db.QueryRow(`
 		SELECT * FROM users WHERE email = ? AND password = ?`, username, password).Scan(&user.Username)
 	if err != nil {
+		return nil
+	}
+
+	match := middleware.Verifypassword(password, user.Password)
+	if match == false {
 		return nil
 	}
 

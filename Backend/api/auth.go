@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"final-project-engineering-56/Backend/middleware"
 	"final-project-engineering-56/Backend/model"
 	"net/http"
 	"strconv"
@@ -82,7 +83,7 @@ func (api *API) Register(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	err = api.userRepo.Register(Regis.Username, Regis.Password, Regis.Email)
+	err = api.userRepo.Register(Regis.Username, middleware.Hashpassword(Regis.Password), Regis.Email)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		encoder := json.NewEncoder(w)
@@ -92,26 +93,6 @@ func (api *API) Register(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("Register success"))
 }
-
-// err := json.NewDecoder(r.Body).Decode(&user)
-// if err != nil {
-// 	w.WriteHeader(http.StatusBadRequest)
-// 	return
-// }
-
-// Regis, err := api.userRepo.Register(user.Username, user.Password, user.Email)
-// if err != nil {
-// 	w.WriteHeader(http.StatusBadRequest)
-// }
-
-// encoder := json.NewEncoder(w)
-// if err != nil {
-// 	w.WriteHeader(http.StatusUnauthorized)
-// 	encoder.Encode(AuthError{Error: "Register failed"})
-// 	return
-// }
-
-// json.NewEncoder(w).Encode(Regis)
 
 func (api *API) logout(w http.ResponseWriter, r *http.Request) {
 	api.AllowOrigin(w, r)
