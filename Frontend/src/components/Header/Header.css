@@ -1,0 +1,117 @@
+/* Navigation */
+.head-navbar{
+    background-color: #010038;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+.head-nav-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+    max-width: 1500px;
+  
+}
+
+.head-nav-logo {
+    color: #fff;
+    justify-self: start;
+    margin-left: 20px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+}
+
+.head-nav-menu {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    grid-gap: 10px;
+    list-style: none;
+    text-align: center;
+    width: 60vw;
+    justify-content: end;
+    margin-right: 2rem;
+}
+
+.head-nav-item {
+    font-size: 20px;
+
+}
+
+/* Header Container */
+
+.header-container {
+    background-color: #010038;
+    font-family: 'Poppins';
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+
+
+}
+
+.hero-container>h1 {
+    font-size: 128px;
+    line-height: 192px;
+    padding-left: 130px;
+    padding-top: 100px;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.hero-container>p {
+    font-size: 48px;
+    line-height: 72px;
+    padding-left: 130px;
+    color: #FFFFFF;
+    width: 700px;
+    height: 144px;
+    display: flex;
+}
+
+.btn {
+    color: #FFFFFF;
+    font-size: 24px;
+    text-decoration: none;
+    background-color: #0AA1DD;
+    border-radius: 8px;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.btn-b {
+    color: #FFFFFF;
+    font-size: 24px;
+    text-decoration: none;
+    background-color: #0AA1DD;
+    border-radius: 8px;
+    padding: 10px 20px;
+    display: inline-block;
+    margin-left: 130px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.img-cover{
+    width: 800px;
+    height: 595px;
+    margin-left: 690px;
+    margin-top: -376px;
+    display: flex;
+}
