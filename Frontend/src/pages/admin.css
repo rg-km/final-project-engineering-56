@@ -1,0 +1,108 @@
+.float-logo {
+    height: 40px;
+    width: 143px;
+    left: 80px;
+    top: 27px;
+    border-radius: 0px;
+    margin-top: 27px;
+    margin-left: 80px;
+}
+
+.tambah {
+    margin-left: 150px;
+    margin-top: 30px;
+    color: #010038;
+    background-color: #0AA1DD;
+    height: 40px;
+    width: 143px;
+    border-radius: 15%;
+    font-weight: 700;
+}
+table {
+    border: 2px solid black;
+    width: 1400px;
+    height: 200px;
+    background-color: white;
+    margin-left: 150px;
+    margin-top: 30px;
+  }
+    
+th {
+    border-bottom: 2px solid black;
+  }
+    
+td {
+    text-align: center;
+    border-right: 2px solid black;
+  }
+
+.judul {
+    color: white;
+    font-weight: bold;
+    margin-left: 150px;
+    margin-top: 30px;
+    font-size: 30px;
+}
+
+.judul2 {
+    color: white;
+    margin-left: 150px;
+    margin-top: 30px;
+    font-size: 30px;
+}
+
+.nama {
+    color: white;
+    font-size: 24px;
+    margin-left: 150px;
+    margin-top: 30px;
+    margin-right: 150px;
+}
+
+.form {
+    color: black;
+    font-size: 24px;
+    margin-top: 30px;
+    margin-left: 150px;
+    display: flex;
+    flex-direction: row;
+    width: 20vw;
+}
+
+.textarea {
+    color: black;
+    font-size: 24px;
+    margin-top: 30px;
+    margin-left: 150px;
+    display: flex;
+    flex-direction: row;
+    width: 20vw;
+    height: 5vw;
+}
+
+.setuju {
+    margin-left: 150px;
+    margin-top: 30px;  
+    color: #010038; 
+    background-color: #0AA1DD;
+    height: 40px;
+    width: 143px;
+    font-size: medium;
+    font-weight: 700;
+}
+
+.setuju2 {
+    margin-left: 25px;
+    margin-top: 30px;  
+    color: #010038; 
+    background-color: #0AA1DD;
+    height: 40px;
+    width: 143px;
+    font-size: medium;
+    font-weight: 700;
+}
+
+.pos {
+    display: flex;
+    flex-direction: column;
+}
