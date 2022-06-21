@@ -1,21 +1,25 @@
-import React from 'react';
+import React, {useState}from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';
 
 function Header() {
+    const [click, setClick] = useState(false);
+
+    const closeMobileMenu = () => setClick(false);
+
     return (
         <>
             <nav className='head-navbar'>
                 <div className='head-nav-container'>
-                    <Link to='/' className='head-nav-logo'>
+                    <Link to='/' className='head-nav-logo' onClick={closeMobileMenu}>
                         <img src='/images/logo.png' alt='logo' />
                     </Link>
-                    <ul className='head-nav-menu'>
+                    <ul className={click ? "head-nav-menu active":"head-nav-menu"}>
                         <li className='head-nav-item'>
-                            <Link to='/' className='btn btn-rounded'>Sign In</Link>
+                            <Link to='/login' className='nav-links' onClick={closeMobileMenu}>Sign In</Link>
                         </li>
                         <li className='head-nav-item'>
-                            <Link to='/' className='btn btn-rounded'>Sign Up</Link>
+                            <Link to='/register' className='nav-links' onClick={closeMobileMenu}>Sign Up</Link>
                         </li>
                     </ul>
                 </div>
@@ -27,12 +31,12 @@ function Header() {
                             <h1>Bukuku</h1>
                             <p>Baca buku dimana saja dan kapan saja
                             </p>
-                            <button className='btn-b btn-rounded'>Baca Sekarang</button>
+                            <button className='btn-b btn-rounded'><Link to ={"/home"}>Baca Sekarang</Link></button>
                         </div>
                         <div className='hero-image'>
                             <img src='/images/cover.png' alt='cover' className='img-cover' />
                         </div>
-                    </header> 
+                    </header>
                 </div>
             </div>
         </>
