@@ -31,7 +31,7 @@ function Header() {
                             <h1>Bukuku</h1>
                             <p>Baca buku dimana saja dan kapan saja
                             </p>
-                            <button className='btn-b btn-rounded'><Link to ={"/home"}>Baca Sekarang</Link></button>
+                            <button className='btn-b btn-rounded'><Link className="text-white" to ={"/home"}>Baca Sekarang</Link></button>
                         </div>
                         <div className='hero-image'>
                             <img src='/images/cover.png' alt='cover' className='img-cover' />

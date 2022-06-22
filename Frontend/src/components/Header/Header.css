@@ -115,3 +115,7 @@
     margin-top: -376px;
     display: flex;
   }
+
+  .text-white{
+    color:#fff !important;
+  }
