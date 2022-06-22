@@ -17,21 +17,23 @@ func NewUserLogin(db *sql.DB) *UserLogin {
 	return &UserLogin{db: db}
 }
 
-func (u *UserLogin) Login(email string, password string) *string {
-	var user model.Users
+func (u *UserLogin) Login(email string, password string) model.Users {
+	var users model.Users
+	var users2 model.Users
 
 	err := u.db.QueryRow(`
-		SELECT email FROM users WHERE email = ? AND password = ?`, email, password).Scan(&user.Email)
+		SELECT * FROM users WHERE email = ?`, email).Scan(&users.ID, &users.Username, &users.Password, &users.Email)
 	if err != nil {
-		return nil
+		return users
 	}
 
-	match := middleware.Verifypassword(password, user.Password)
+	match := middleware.Verifypassword(password, users.Password)
 	if match == false {
-		return nil
+		return users2
 	}
 
-	return &user.Email
+	return users
+
 }
 
 func (u *UserLogin) Register(username string, password string, email string) error {
@@ -96,3 +98,5 @@ func (u *UserLogin) GetbyID(id int) (model.Users, error) {
 
 	return user, nil
 }
+
+// func (u *UserLogin) FetchUserEmail()

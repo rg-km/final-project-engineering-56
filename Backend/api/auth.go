@@ -45,8 +45,8 @@ func (api *API) login(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	errr := api.userRepo.Login(user.Email, user.Password)
-	if errr != nil {
+	user = api.userRepo.Login(user.Email, user.Password)
+	if user.Email == "" {
 		w.WriteHeader(http.StatusBadRequest)
 		encoder := json.NewEncoder(w)
 		encoder.Encode(AuthError{Error: "Failed to login"})
@@ -67,7 +67,7 @@ func (api *API) login(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	http.SetCookie(w, &http.Cookie{
+ 	http.SetCookie(w, &http.Cookie{
 		Name:    "token",
 		Value:   tokenString,
 		Expires: time.Now().Add(time.Minute * 60),
@@ -75,35 +75,6 @@ func (api *API) login(w http.ResponseWriter, req *http.Request) {
 
 	json.NewEncoder(w).Encode(LoginSuccess{Username: user.Username, Email: user.Email, Token: tokenString})
 
-	// encoder := json.NewEncoder(w)
-	// if err != nil {
-	// 	w.WriteHeader(http.StatusUnauthorized)
-	// 	encoder.Encode(AuthError{Error: "Login failed"})
-	// 	return
-	// }
-
-	// token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims{
-	// 	Username: user.Username,
-	// 	Email:    user.Email,
-	// 	StandardClaims: jwt.StandardClaims{
-	// 		ExpiresAt: time.Now().Add(time.Minute * 60).Unix(),
-	// 	},
-	// })
-
-	// tokenString, err := token.SignedString(key)
-	// if err != nil {
-	// 	w.WriteHeader(http.StatusInternalServerError)
-	// 	encoder.Encode(AuthError{Error: "Failed to generate token"})
-	// 	return
-	// }
-
-	// http.SetCookie(w, &http.Cookie{
-	// 	Name:    "token",
-	// 	Value:   tokenString,
-	// 	Expires: time.Now().Add(time.Minute * 60),
-	// })
-
-	// json.NewEncoder(w).Encode(LoginSuccess{Username: user.Username, Email: user.Email, Token: tokenString})
 }
 
 func (api *API) Register(w http.ResponseWriter, r *http.Request) {

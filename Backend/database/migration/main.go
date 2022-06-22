@@ -33,11 +33,7 @@ func main() {
 			pengarang VARCHAR(255) NOT NULL,
 			tahun VARCHAR(255) NOT NULL,
 			gambar VARCHAR(255) NOT NULL,
-			deskripsi VARCHAR(255) NOT NULL);
-
-
-		INSERT INTO users(username, password, email) VALUES
-			("nanda", "nanda123","nanda@gmail.com");`)
+			deskripsi VARCHAR(255) NOT NULL);`)
 
 	if err != nil {
 		panic(err)
