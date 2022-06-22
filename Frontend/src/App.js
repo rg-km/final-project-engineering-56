@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from 'react';
 import Tambah from "./pages/tambah";
 import Edit from "./pages/edit";
@@ -14,7 +15,27 @@ function App() {
         </Routes>
       </div>
     </main>
+=======
+// import profile from "../../Profile-login.png"
+import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from "./page/login";
+import Registrasi from "./page/registrasi";
+
+function App() {
+  return (
+    <>
+      <center>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/signup" element={<Registrasi />} />
+        </Routes>
+      </Router>
+      </center>
+    </>
+>>>>>>> origin/FixAll2
   );
-}
+} 
 
 export default App;

@@ -6,5 +6,13 @@
 }
 
 .App {
+<<<<<<< HEAD
   background-color: #010038;
+=======
+    font-family: sans-serif;
+    text-align: center;
+}
+body {
+    background-color: rgb(5, 5, 76);
+>>>>>>> origin/FixAll2
 }
