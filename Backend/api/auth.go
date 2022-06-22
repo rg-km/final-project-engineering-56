@@ -12,16 +12,16 @@ import (
 	"github.com/gorilla/mux"
 )
 
-type User struct {
-	ID       int    `json:"id"`
-	Username string `json:"username"`
-	Password string `json:"password"`
-	Email    string `json:"email"`
-}
-
 type LoginSuccess struct {
 	Username string `json:"username"`
+	Email    string `json:"email"`
 	Token    string `json:"token"`
+}
+
+type RegisSuccess struct {
+	Username string `json:"username"`
+	Email    string `json:"email"`
+	Password string `json:"password"`
 }
 
 type AuthError struct {
@@ -38,31 +38,32 @@ var key = []byte("secret")
 
 func (api *API) login(w http.ResponseWriter, req *http.Request) {
 	api.AllowOrigin(w, req)
-	var user User
+	var user model.Users
 	err := json.NewDecoder(req.Body).Decode(&user)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
-	encoder := json.NewEncoder(w)
-	if err != nil {
-		w.WriteHeader(http.StatusUnauthorized)
-		encoder.Encode(AuthError{Error: "Login failed"})
+	errr := api.userRepo.Login(user.Email, user.Password)
+	if errr != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		encoder := json.NewEncoder(w)
+		encoder.Encode(AuthError{Error: "Failed to login"})
 		return
 	}
 
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims{
+	claims := claims{
 		Username: user.Username,
+		Email:    user.Email,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(time.Minute * 60).Unix(),
 		},
-	})
-
+	}
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	tokenString, err := token.SignedString(key)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		encoder.Encode(AuthError{Error: "Failed to generate token"})
+		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
@@ -72,7 +73,37 @@ func (api *API) login(w http.ResponseWriter, req *http.Request) {
 		Expires: time.Now().Add(time.Minute * 60),
 	})
 
-	json.NewEncoder(w).Encode(LoginSuccess{Username: user.Username, Token: tokenString})
+	json.NewEncoder(w).Encode(LoginSuccess{Username: user.Username, Email: user.Email, Token: tokenString})
+
+	// encoder := json.NewEncoder(w)
+	// if err != nil {
+	// 	w.WriteHeader(http.StatusUnauthorized)
+	// 	encoder.Encode(AuthError{Error: "Login failed"})
+	// 	return
+	// }
+
+	// token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims{
+	// 	Username: user.Username,
+	// 	Email:    user.Email,
+	// 	StandardClaims: jwt.StandardClaims{
+	// 		ExpiresAt: time.Now().Add(time.Minute * 60).Unix(),
+	// 	},
+	// })
+
+	// tokenString, err := token.SignedString(key)
+	// if err != nil {
+	// 	w.WriteHeader(http.StatusInternalServerError)
+	// 	encoder.Encode(AuthError{Error: "Failed to generate token"})
+	// 	return
+	// }
+
+	// http.SetCookie(w, &http.Cookie{
+	// 	Name:    "token",
+	// 	Value:   tokenString,
+	// 	Expires: time.Now().Add(time.Minute * 60),
+	// })
+
+	// json.NewEncoder(w).Encode(LoginSuccess{Username: user.Username, Email: user.Email, Token: tokenString})
 }
 
 func (api *API) Register(w http.ResponseWriter, r *http.Request) {
@@ -90,8 +121,8 @@ func (api *API) Register(w http.ResponseWriter, r *http.Request) {
 		encoder.Encode(AuthError{Error: "Failed to register"})
 		return
 	}
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("Register success"))
+
+	json.NewEncoder(w).Encode(RegisSuccess{Username: Regis.Username, Email: Regis.Email, Password: Regis.Password})
 }
 
 func (api *API) logout(w http.ResponseWriter, r *http.Request) {

@@ -17,11 +17,11 @@ func NewUserLogin(db *sql.DB) *UserLogin {
 	return &UserLogin{db: db}
 }
 
-func (u *UserLogin) Login(username string, password string) *string {
+func (u *UserLogin) Login(email string, password string) *string {
 	var user model.Users
 
 	err := u.db.QueryRow(`
-		SELECT * FROM users WHERE email = ? AND password = ?`, username, password).Scan(&user.Username)
+		SELECT email FROM users WHERE email = ? AND password = ?`, email, password).Scan(&user.Email)
 	if err != nil {
 		return nil
 	}
@@ -31,7 +31,7 @@ func (u *UserLogin) Login(username string, password string) *string {
 		return nil
 	}
 
-	return &user.Username
+	return &user.Email
 }
 
 func (u *UserLogin) Register(username string, password string, email string) error {

@@ -1,16 +1,32 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import profile from "../../Profile-login.png";
+import axios from 'axios';
 import "./navbarlogin.css";
 
 const App = () => {
   const navigation=useNavigate()
+  const [Username] = useState(localStorage.getItem("username"));
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 function onLogin(){
-  if(email === "admin@email.com" && password === "123"){
-    navigation("/beranda")
-  }
+
+  axios.post('http://localhost:8080/api/user/login', {
+    Username: Username,
+    email: email,
+    password: password
+  })
+  .then(res => {
+    console.log(res.data)
+    if(res.data.success){
+      alert("Login Success")
+      localStorage.setItem('token', res.data.token)
+      navigation("/beranda")
+    }
+  })
+  .catch(err => {
+    console.log(err)
+  })
 }
   return (
     <div style={{marginTop: "100px"}}>
