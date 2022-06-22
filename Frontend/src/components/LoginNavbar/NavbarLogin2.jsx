@@ -16,10 +16,10 @@ function onLogin(){
   })
   .then(res => {
     console.log(res.data)
-    if(res.data.success){
+    if(res.data.token != ""){
       alert("Login Success")
       localStorage.setItem('token', res.data.token)
-      navigation("/beranda")
+      navigation("/Home")
     }
   })
   .catch(err => {
