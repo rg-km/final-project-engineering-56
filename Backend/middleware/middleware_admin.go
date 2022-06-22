@@ -9,7 +9,7 @@ type Respon struct {
 	Error string `json:"error"`
 }
 
-func AdminMiddleware(next http.Handler) http.Handler {
+func ValidasiAdmin(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// do something before request
 		next.ServeHTTP(w, r)

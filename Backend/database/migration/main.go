@@ -33,7 +33,15 @@ func main() {
 			pengarang VARCHAR(255) NOT NULL,
 			tahun VARCHAR(255) NOT NULL,
 			gambar VARCHAR(255) NOT NULL,
-			deskripsi VARCHAR(255) NOT NULL);`)
+			deskripsi VARCHAR(255) NOT NULL);
+			
+			CREATE TABLE IF NOT EXISTS user_book_history (
+				id INTEGER PRIMARY KEY AUTOINCREMENT,
+				id_user VARCHAR(255) ,
+				id_books VARCHAR(255) ,
+				last_page VARCHAR(255) );
+			
+			`)
 
 	if err != nil {
 		panic(err)
