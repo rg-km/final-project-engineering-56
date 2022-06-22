@@ -7,26 +7,24 @@ const App = () => {
   const [Username, setUsername] = useState("")
   const [Email, setEmail] = useState("")
   const [Password, setPassword] = useState("")
- function onRegister(){
+  function onRegister(){
   axios.post('http://localhost:8080/api/user/register', {
+  // XMLHttpRequest('http://localhost:8080/api/user/register', {
     username: Username,
     email: Email,
     password: Password
   })
-  // .then(res => {
-  //   console.log(res.data)
-  //   if(res.data.success){
-  //     alert("Register Success")
-  //   }
-  // })
-  // .catch(err => {
-  //   console.log(err)
-  // }); 
+  .then(res => {
+    console.log(res.data)
+  })
+  .catch(err => {
+    console.log(err)
+  }); 
   }
 
 
   return (
-  <form>
+  
     <div style={{marginTop: "100px"}}>
       <div className="container">
         <h1 className="text-daftar">Daftar</h1>
@@ -59,13 +57,13 @@ const App = () => {
               <input type="password" placeholder="Confirm your password" className="form-control"/>
               </div> */}
 
-              <button className="btn btn-primary" onSubmit={onRegister()} > Create Akun</button>
+              <button className="btn btn-primary" type="submit"  onClick={onRegister()} > Create Akun</button>
               <p className="text-white">have an account? <a href="/"> Login </a> </p>
             </div>
         </div>  
       </div>
     </div>
-  </form>
+ 
   )
 }
   

@@ -6,13 +6,11 @@ import "./navbarlogin.css";
 
 const App = () => {
   const navigation=useNavigate()
-  const [Username] = useState(localStorage.getItem("username"));
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 function onLogin(){
 
   axios.post('http://localhost:8080/api/user/login', {
-    Username: Username,
     email: email,
     password: password
   })
