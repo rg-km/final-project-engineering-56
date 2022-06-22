@@ -34,10 +34,14 @@ func main() {
 			tahun VARCHAR(255) NOT NULL,
 			gambar VARCHAR(255) NOT NULL,
 			deskripsi VARCHAR(255) NOT NULL);
-
-
-		INSERT INTO users(username, password, email) VALUES
-			("nanda", "nanda123","nanda@gmail.com");`)
+			
+			CREATE TABLE IF NOT EXISTS user_book_history (
+				id INTEGER PRIMARY KEY AUTOINCREMENT,
+				id_user VARCHAR(255) ,
+				id_books VARCHAR(255) ,
+				last_page VARCHAR(255) );
+			
+			`)
 
 	if err != nil {
 		panic(err)
