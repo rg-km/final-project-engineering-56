@@ -47,9 +47,9 @@ function Navbar() {
                         <li className="nav-item">
                             <Link to="/about" className="nav-links" onClick={closeMobileMenu}>About</Link>
                         </li>
-                        <div className='search-icon'>
+                        <li className="nav-links">
                             <input type="search" placeholder="Search" value={search} onChange={e=>setSearch(e.target.value)} onKeyPress={searchBook}/>
-                        </div>
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -59,7 +59,7 @@ function Navbar() {
             <div className='container'>
                 {
                     <Cards book={bookData}/>
-}
+                }
             </div>
         </>
     )

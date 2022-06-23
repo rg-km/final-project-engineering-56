@@ -165,4 +165,8 @@
     color: #242424;
     transition: 250ms;
   }
+
+  .h1{
+    text-align: center;
+  }
 }

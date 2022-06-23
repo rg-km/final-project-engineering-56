@@ -19,7 +19,7 @@ function Header() {
                             <Link to='/login' className='nav-links' onClick={closeMobileMenu}>Sign In</Link>
                         </li>
                         <li className='head-nav-item'>
-                            <Link to='/register' className='nav-links' onClick={closeMobileMenu}>Sign Up</Link>
+                            <Link to='/signup' className='nav-links' onClick={closeMobileMenu}>Sign Up</Link>
                         </li>
                     </ul>
                 </div>

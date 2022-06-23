@@ -7,13 +7,15 @@ import Admin from "./pages/admin";
 import Home from "./pages/Home";
 // import beranda from "./pages/beranda";
 import { Route, Routes } from "react-router-dom";
+import Heroes from './pages/Heroes';
 
 function App() {
   return (
     <main aria-label="App" className="App">
       <div className="routes" aria-label="routes">
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/Index" element={<Heroes/>}/>
+          <Route path="/Login" element={<Login />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/tambah" element={<Tambah />} />
           <Route path="/edit" element={<Edit />} />
