@@ -8,16 +8,17 @@ import (
 )
 
 type API struct {
-	userRepo  controller.UserLogin
-	bukuRepo  controller.Buku
-	adminRepo controller.Admin
-	mux       *http.ServeMux
+	userRepo    controller.UserLogin
+	bukuRepo    controller.Buku
+	adminRepo   controller.Admin
+	historyRepo controller.UserBookHistory
+	mux         *http.ServeMux
 }
 
-func NewApi(userRepo controller.UserLogin, bukuRepo controller.Buku, adminRepo controller.Admin) API {
+func NewApi(userRepo controller.UserLogin, bukuRepo controller.Buku, adminRepo controller.Admin, historyRepo controller.UserBookHistory) API {
 	mux := http.NewServeMux()
 	api := API{
-		userRepo, bukuRepo, adminRepo, mux,
+		userRepo, bukuRepo, adminRepo, historyRepo, mux,
 	}
 	//user
 	mux.Handle("/api/user/login", api.POST(http.HandlerFunc(api.login)))       // POST
@@ -38,12 +39,17 @@ func NewApi(userRepo controller.UserLogin, bukuRepo controller.Buku, adminRepo c
 	// mux.Handle("/api/admin/getidadmin", api.GET(http.HandlerFunc(api.AdminGetById))) //GET
 
 	//buku
-	
+
 	mux.Handle("/api/buku/addbuku", api.POST(http.HandlerFunc(api.InputBuku)))     // POST
 	mux.Handle("/api/buku/delete", api.POST(http.HandlerFunc(api.DeleteBukuByID))) // POST
 	mux.Handle("/api/buku/update", api.POST(http.HandlerFunc(api.UpdateBukuByID))) // POST
+	mux.Handle("/api/buku/setfavorit", api.POST(http.HandlerFunc(api.setFavorit))) // POST
 	mux.Handle("/api/buku/getidbuku", api.GET(http.HandlerFunc(api.GetById)))      // GET
 	mux.Handle("/api/buku/getall", api.GET(http.HandlerFunc(api.Getallbuku)))      // GET
+	mux.Handle("/api/buku/search", api.GET(http.HandlerFunc(api.searchBooks)))     // GET
+	mux.Handle("/api/buku/fetch", api.GET(http.HandlerFunc(api.fetchBooks)))       // GET
+	mux.Handle("/api/buku/getfav", api.GET(http.HandlerFunc(api.GetFav)))       // GET
+
 	return api
 }
 

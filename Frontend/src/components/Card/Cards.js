@@ -3,7 +3,6 @@ import './Cards.css';
 import ModalCard from './ModalCard';
 
 const Cards = ({ book }) => {
-  console.log(book)
 
   const [show, setShow] = useState(false);
   const [bookItem, setItem] = useState();
