@@ -8,12 +8,13 @@ function Navbar() {
     const [click, setClick] = useState(false);
     const [search,setSearch] = useState("");
     const [bookData,setData] = useState([]);
+
     const searchBook=(evt)=>{
         if(evt.key==="Enter")
         {
-            axios.get('https://www.googleapis.com/books/v1/volumes?q='+search+'&key=AIzaSyC5NOJuFFErZ1zl7lrkYGdCX1Ez_YOjv_4'+'&maxResults=40')
+            axios.get('http://localhost:8080/api/buku/search?Param='+search.replace(" ","+"))
             .then(res=>setData(res.data.items))
-            .catch(err=>console.log(err))
+            .catch(err => {console.log(err)})
         }
     }
 

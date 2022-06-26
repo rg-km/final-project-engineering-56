@@ -7,7 +7,9 @@ import { Link } from 'react-router-dom'
 
 export default function Admin(props) {
 
-  
+    function GetFavBooks(){
+        
+    }
 
     return (
         <div>
@@ -20,9 +22,9 @@ export default function Admin(props) {
         <table>
           <thead>
         <tr>
-          <th>Judul</th>
-          <th>Penulis</th>
-          <th>Tanggal Upload</th>
+          <th>IDUser</th>
+          <th>IDBooks</th>
+          <th>Favorite</th>
           <th></th>
         </tr>
           </thead>

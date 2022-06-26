@@ -14,7 +14,7 @@ function App() {
     <main aria-label="App" className="App">
       <div className="routes" aria-label="routes">
         <Routes>
-          <Route path="/Index" element={<Heroes/>}/>
+          <Route path="/" element={<Heroes/>}/>
           <Route path="/Login" element={<Login />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/tambah" element={<Tambah />} />
