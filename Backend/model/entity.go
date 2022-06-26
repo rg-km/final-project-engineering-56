@@ -16,13 +16,25 @@ type Books struct {
 	Tahun     string `db:"tahun";json:"tahun"`
 	Gambar    string `db:"gambar";json:"gambar"`
 	Deskripsi string `db:"deskripsi";json:"deskripsi"`
-	}
+}
 
 type Admin struct {
 	ID       int    `db:"idadmin";json:"idadmin"`
 	Username string `db:"username";json:"username"`
 	Password string `db:"password";json:"password"`
 	Role     string `db:"role";json:"role"`
+}
+
+type HistoryBuku struct {
+	ID        int    `json:id`
+	ID_user   string `idUser`
+	ID_books  string `idBooks`
+	Last_page string `last_page`
+	Favorite  bool
+}
+
+type SearchBukuNavBar struct {
+	SearchBuku string `json:search`
 }
 
 type TempGoogleBooks struct {
